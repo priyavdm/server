@@ -1,8 +1,9 @@
 const express = require("express");
 var mysql      = require('mysql');
+var cors = require("cors")
 app=express()
 app.use(express.json())
-
+app.use(cors())
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -80,6 +81,17 @@ app.get('/getall/',(req,res)=>{
     //      res.json(results)
     //  });
     // });
+
+
+    app.post('/insert',(req,res)=>{
+        connection.query(`insert into contactdetails (contactname,email,message) values ('${req.body.Cname}','${req.body.email}','${req.body.message}')`, function (error, results) {
+         if (error) {
+        console.log(error);
+    }
+        
+         res.json(results)
+     });
+    });
 
     // ************** using get method to find names ***********
 
